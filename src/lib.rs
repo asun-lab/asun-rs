@@ -195,14 +195,14 @@ mod tests {
     }
 
     #[test]
-    fn test_decode_rejects_schema_type_aliases() {
+    fn test_decode_rejects_invalid_schema_types() {
         for input in [
-            "{id@integer,name@str}:(1,Alice)",
-            "{id@int,name@string}:(1,Alice)",
-            "{score@double}:(3.5)",
-            "{alive@boolean}:(true)",
-            "{tags@[string]}:([Alice])",
-            "{profile@{name@string}}:((Alice))",
+            "{id@numx,name@str}:(1,Alice)",
+            "{id@int,name@textx}:(1,Alice)",
+            "{score@decimalx}:(3.5)",
+            "{alive@flagx}:(true)",
+            "{tags@[textx]}:([Alice])",
+            "{profile@{name@textx}}:((Alice))",
         ] {
             assert!(decode::<serde_json::Value>(input).is_err(), "{input}");
         }
